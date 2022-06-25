@@ -6,7 +6,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const md5 = require("md5");
 
-console.log(md5("message"));
+// console.log(md5("message"));
 
 const User = require("./models/user.model");
 
@@ -47,10 +47,9 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-    const email = req.body.email;
-    const password = md5(req.body.password);
+    const { email, password } = req.body;
     const user = await User.findOne({ email: email });
-    if (user && user.password === password) {
+    if (user) {
       res.status(200).json({ status: "valid user" });
     } else {
       res.status(404).json({ status: "Not valid user" });
