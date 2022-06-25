@@ -59,4 +59,19 @@
     email: req.body.username,
     password: md5(req.body.password),
   });
+
+  app.post("/login", async (req, res) => {
+    try {
+      const email = req.body.email;
+      const password = md5(req.body.password);
+      const user = await User.findOne({ email: email });
+      if (user && user.password === password) {
+        res.status(200).json({ status: "valid user" });
+      } else {
+        res.status(404).json({ status: "Not valid user" });
+      }
+    } catch (error) {
+      res.status(500).json(error.message);
+    }
+  });
   ```
