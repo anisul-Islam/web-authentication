@@ -1,12 +1,12 @@
-// hashing password
+// hashing + salting password
 
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const md5 = require("md5");
 
-// console.log(md5("message"));
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const User = require("./models/user.model");
 
@@ -34,9 +34,11 @@ app.get("/", (req, res) => {
 
 app.post("/register", async (req, res) => {
   try {
-    const newUser = new User({
-      email: req.body.email,
-      password: md5(req.body.password),
+    bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+      const newUser = new User({
+        email: req.body.email,
+        password: hash,
+      });
     });
     await newUser.save();
     res.status(201).json(newUser);
@@ -47,10 +49,16 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
     const user = await User.findOne({ email: email });
+
     if (user) {
-      res.status(200).json({ status: "valid user" });
+      bcrypt.compare(myPlaintextPassword, hash, function (err, result) {
+        if (result === true) {
+          res.status(200).json({ status: "valid user" });
+        }
+      });
     } else {
       res.status(404).json({ status: "Not valid user" });
     }
