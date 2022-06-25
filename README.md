@@ -34,9 +34,29 @@
   const encKey = process.env.ENCRYPTION_KEY;
   // encrypt age regardless of any other options. name and _id will be left unencrypted
   userSchema.plugin(encrypt, {
-    encryptionKey: encKey,
+    secret: encKey,
     encryptedFields: ["age"],
   });
 
   User = mongoose.model("User", userSchema);
+  ```
+
+## Level 3: Hashing password
+
+- no cncryption key; we will use hashing algorithm
+- hackers can not convert to plain text as no encryption key is available
+- md5 package: https://www.npmjs.com/package/md5
+- install md5 npm package: `npm install md5`
+- usage
+
+  ```js
+  var md5 = require("md5");
+  console.log(md5("message"));
+  // 78e731027d8fd50ed642340b7c9a63b3
+
+  // hash password when create it
+  const newUser = new User({
+    email: req.body.username,
+    password: md5(req.body.password),
+  });
   ```
