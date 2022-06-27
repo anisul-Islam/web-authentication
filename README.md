@@ -155,7 +155,7 @@
 - bootstrap the project
 
   - installing & requiring packages
-    `npm install express nodemon dotenv mongoose ejs`
+    `npm install express nodemon dotenv mongoose ejs cors`
   - creating server
 
     ```js
