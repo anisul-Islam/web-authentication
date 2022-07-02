@@ -842,3 +842,20 @@ app.get("/register", checkLoggedIn, (req, res) => {
 
   module.exports = app;
   ```
+
+## Level 7: passport-jwt (token based)
+
+- how token based works
+  - user register using username, password to the server -> server creates a token for the user -> so next time when user make any request server give access by validating the given token
+- folder and file structure
+  - server
+    - models
+      - user.model.js
+    - config
+    - app.js
+    - index.js
+    - .env
+    - .gitignore
+- initialize npm and install package
+  `npm init -y && npm install express nodemon cors dotenv bcrypt mongoose`
+- test
