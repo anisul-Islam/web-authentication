@@ -2,6 +2,7 @@
 
 - save(), find({property: value})
 - if hacker can access our database then our data is too much human readable
+- [password checker online](http://password-checker.online-domain-tools.com/)
 
 ## Level 2: Database Encryption
 
