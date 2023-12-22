@@ -13,7 +13,8 @@ passport.use(
       callbackURL: "http://localhost:5000/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, cb) {
-      User.findOne({ googleId: profile.id }, (err, user) => {
+      User.findOne({ googleId: profile.id })
+      .then((err, user) => {
         if (err) return cb(err, null);
 
         // not a user; so create a new user with new google id
